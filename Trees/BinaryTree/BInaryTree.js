@@ -16,10 +16,12 @@ class BinarySearchTree {
   }
 
   findHeight(root = this.root) {
-    if (root === null) return 0;
+    if (root === null) return -1;
 
-    let right = this.findHeight(root.right)
-    let left = this.findHeight(root.left)
+    let left = this.findHeight(root.left);
+    let right = this.findHeight(root.right);
+
+    return Math.max(left, right) + 1;
   }
 
   convertToArray(root = this.root) {
@@ -49,6 +51,42 @@ class BinarySearchTree {
     return result;
   }
 
+  findSecondLargest(root = this.root) {
+    if (!root || (!root.right && !root.left)) return null;
+
+    if (!root.right) {
+      let current = root.left;
+      while (current && current.right) {
+        current = current.right;
+      }
+
+      return current.val;
+    }
+
+    if (root.right && !root.right.right && !root.right.left) {
+      return root.val;
+    }
+
+    return this.findSecondLargest(root.right);
+  }
+
+  printOrder(root = this.root) {
+    const queue = [root];
+    console.log(root.val)
+    while (queue.length > 0) {
+      let current = queue.shift();
+
+      if (current.left) {
+        queue.push(current.left);
+        console.log(current.left.val);
+      }
+      if (current.right) {
+        queue.push(current.right);
+        console.log(current.right.val);
+      }
+    }
+  }
+
   _insertNode(root, value) {
     if (root === null) {
       return new TreeNode(value);
@@ -63,6 +101,15 @@ class BinarySearchTree {
     }
 
     return root;
+  }
+
+  calculateSum(root = this.root) {
+    if (root === null) return 0;
+
+    let left = this.calculateSum(root.left);
+    let right = this.calculateSum(root.right);
+
+    return left + right + 1;
   }
 
   print(node = this.root, prefix = '', isLeft = true) {
@@ -95,10 +142,12 @@ class BinarySearchTree {
 const BTree = new BinarySearchTree();
 
 BTree.insert(10);
-BTree.insert(9);
+BTree.insert(5);
+BTree.insert(15);
 BTree.insert(12);
-BTree.insert(14);
-BTree.insert(11);
+BTree.insert(20);
+BTree.insert(17);
 
-// BTree.convertToArray();
+BTree.printOrder();
+
 BTree.print();

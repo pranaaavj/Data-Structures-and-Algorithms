@@ -1,10 +1,11 @@
-const arr = ['one', 'two', 'three'];
-const str = 'Hello';
+function checkPalindrome(str, reversed = '', length = str.length - 1) {
+  if (str.length === reversed.length || length < 0) {
+    if (str === reversed) return true;
+    else return false;
+  }
 
-const res = arr.includes('on');
-const anotherVar = arr.includes('onetwo');
-const newVar = str.includes('ll');
+  reversed += str[length];
+  return checkPalindrome(str, reversed, length - 1);
+}
 
-console.log(res);
-console.log(anotherVar);
-console.log(newVar);
+console.log(checkPalindrome('malayalam'));
