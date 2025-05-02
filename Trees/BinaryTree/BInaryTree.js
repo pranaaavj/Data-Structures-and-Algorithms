@@ -6,7 +6,7 @@ class TreeNode {
   }
 }
 
-class BinarySearchTree {
+class BinaryTree {
   constructor() {
     this.root = null;
   }
@@ -16,12 +16,16 @@ class BinarySearchTree {
   }
 
   findHeight(root = this.root) {
-    if (root === null) return -1;
+    if (root === null) return 0;
 
     let left = this.findHeight(root.left);
     let right = this.findHeight(root.right);
 
-    return Math.max(left, right) + 1;
+    if (!root.left && !root.right) {
+      return left + right + 1;
+    } else {
+      return left + right;
+    }
   }
 
   convertToArray(root = this.root) {
@@ -72,7 +76,7 @@ class BinarySearchTree {
 
   printOrder(root = this.root) {
     const queue = [root];
-    console.log(root.val)
+    console.log(root.val);
     while (queue.length > 0) {
       let current = queue.shift();
 
@@ -85,6 +89,12 @@ class BinarySearchTree {
         console.log(current.right.val);
       }
     }
+  }
+
+  sumNodes(root = this.root) {
+    if (!root) return -1;
+
+    return Math.max(this.sumNodes(root.left), this.sumNodes(root.right)) + 1;
   }
 
   _insertNode(root, value) {
@@ -101,15 +111,6 @@ class BinarySearchTree {
     }
 
     return root;
-  }
-
-  calculateSum(root = this.root) {
-    if (root === null) return 0;
-
-    let left = this.calculateSum(root.left);
-    let right = this.calculateSum(root.right);
-
-    return left + right + 1;
   }
 
   print(node = this.root, prefix = '', isLeft = true) {
@@ -139,15 +140,19 @@ class BinarySearchTree {
   }
 }
 
-const BTree = new BinarySearchTree();
+const BTree = new BinaryTree();
 
+BTree.insert(50);
+BTree.insert(60);
+BTree.insert(66);
+BTree.insert(52);
+BTree.insert(54);
+BTree.insert(30);
+BTree.insert(45);
+BTree.insert(35);
 BTree.insert(10);
 BTree.insert(5);
-BTree.insert(15);
-BTree.insert(12);
-BTree.insert(20);
-BTree.insert(17);
-
-BTree.printOrder();
 
 BTree.print();
+
+console.log(BTree.sumNodes());

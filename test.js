@@ -1,11 +1,14 @@
-function checkPalindrome(str, reversed = '', length = str.length - 1) {
-  if (str.length === reversed.length || length < 0) {
-    if (str === reversed) return true;
-    else return false;
-  }
+const id = Symbol('age');
 
-  reversed += str[length];
-  return checkPalindrome(str, reversed, length - 1);
+const user = {
+  name: 'pranav',
+  [id]: 16,
+};
+
+let user2 = { ...user };
+
+console.log(user2)
+
+for (let key in user) {
+  console.log(key);
 }
-
-console.log(checkPalindrome('malayalam'));
