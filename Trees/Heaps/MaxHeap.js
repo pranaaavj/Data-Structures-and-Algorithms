@@ -4,8 +4,8 @@ class Heap {
   }
 
   insert(val) {
-    this.heap.push(val);
-    this.heapifyUp(this.heap.length - 1);
+    this.heap.unshift(val);
+    this.heapifyDown(0);
   }
 
   createHeap(arr) {
@@ -111,6 +111,6 @@ maxHeap.insert(30);
 maxHeap.insert(50);
 maxHeap.insert(80);
 
-// maxHeap.sort();
+maxHeap.sort();
 
 console.log(maxHeap.heap);

@@ -179,12 +179,14 @@ class BinarySearchTree {
 
 const BTree = new BinarySearchTree();
 
-BTree.insert(50);
 BTree.insert(10);
-BTree.insert(40);
 BTree.insert(20);
 BTree.insert(30);
+BTree.insert(40);
+BTree.insert(50);
+BTree.insert(60);
+BTree.insert(70);
 
-BTree.deleteNode(50);
+console.log(BTree.findHeight());
 
 BTree.print();
