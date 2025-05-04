@@ -4,8 +4,8 @@ class Heap {
   }
 
   insert(val) {
-    this.heap.push(val);
-    this.heapifyUp(this.heap.length - 1);
+    this.heap.unshift(val);
+    this.heapifyDown(0);
   }
 
   createHeap(arr) {
@@ -29,7 +29,7 @@ class Heap {
 
   heapifyUp(index = this.heap.length - 1) {
     let parent = this.findParent(index);
-    while (index > 0 && this.heap[index] > this.heap[parent]) {
+    while (index > 0 && this.heap[index] < this.heap[parent]) {
       this.swap(index, parent);
       index = parent;
       parent = this.findParent(index);
@@ -42,11 +42,11 @@ class Heap {
       let left = this.left(index);
       let right = this.right(index);
 
-      if (left < length && this.heap[left] > this.heap[largest]) {
+      if (left < length && this.heap[left] < this.heap[largest]) {
         largest = left;
       }
 
-      if (right < length && this.heap[right] > this.heap[largest]) {
+      if (right < length && this.heap[right] < this.heap[largest]) {
         largest = right;
       }
 
@@ -105,11 +105,11 @@ class Heap {
 
 const maxHeap = new Heap();
 
-maxHeap.insert(10);
-maxHeap.insert(20);
-maxHeap.insert(30);
-maxHeap.insert(50);
 maxHeap.insert(80);
+maxHeap.insert(50);
+maxHeap.insert(30);
+maxHeap.insert(20);
+maxHeap.insert(10);
 
 // maxHeap.sort();
 

@@ -111,6 +111,4 @@ maxHeap.insert(30);
 maxHeap.insert(50);
 maxHeap.insert(80);
 
-maxHeap.sort();
-
 console.log(maxHeap.heap);
