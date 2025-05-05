@@ -12,23 +12,69 @@ class Graph {
     this.adjList.get(v2).push(v1);
   }
 
-  bfs(start) {
+  bfsRecursive(queue = [], visited = {}) {
+    if (!queue.length) return;
+
+    let node = queue.shift();
+    console.log(node);
+
+    visited[node] = true;
+
+    for (let neighbor of this.adjList.get(node)) {
+      if (!visited[neighbor]) {
+        queue.push(neighbor);
+        visited[neighbor] = true;
+      }
+    }
+
+    this.bfsRecursive(queue, visited);
+  }
+
+  bfsIterative(start) {
     let queue = [start];
     let visited = {};
 
     while (queue.length) {
       let vertex = queue.shift();
+      visited[vertex] = true;
+      console.log(vertex);
 
-      if (!visited[vertex]) {
-        visited[vertex] = true;
+      for (let neighbor of this.adjList.get(vertex)) {
+        if (!visited[neighbor]) {
+          visited[neighbor] = true;
+          queue.push(neighbor);
+        }
+      }
+    }
+  }
 
-        console.log(vertex);
+  dfsRecursive(node, visited = {}) {
+    if (!node || visited[node]) return;
 
-        let neighbors = this.adjList.get(vertex);
-        for (let neighbor of neighbors) {
-          if (!visited[neighbor]) {
-            queue.push(neighbor);
-          }
+    visited[node] = true;
+    console.log(node);
+
+    for (let neighbor of this.adjList.get(node)) {
+      if (!visited[neighbor]) {
+        this.dfs(neighbor, visited);
+      }
+    }
+  }
+
+  dfsIterative(node) {
+    let stack = [node];
+    let visited = {};
+
+    while (stack.length) {
+      let current = stack.pop();
+      visited[node] = true;
+
+      console.log(current);
+
+      for (let neighbor of this.adjList.get(current)) {
+        if (!visited[neighbor]) {
+          stack.push(neighbor);
+          visited[neighbor] = true;
         }
       }
     }
@@ -54,4 +100,4 @@ graph.addEdges('4', '3');
 
 graph.showList();
 
-graph.bfs('1');
+graph.bfsRecursive(['1']);
