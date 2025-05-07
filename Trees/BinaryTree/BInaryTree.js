@@ -55,6 +55,19 @@ class BinaryTree {
     return result;
   }
 
+  findDepth(root, target, depth = 0) {
+    if (!root) return -1;
+
+    if (root.val == target) {
+      return depth;
+    }
+
+    const left = this.findDepth(root.left, target, depth + 1);
+    if (left !== -1) return left
+
+    return this.findDepth(root.right, target, depth + 1);
+  }
+
   findSecondLargest(root = this.root) {
     if (!root || (!root.right && !root.left)) return null;
 
@@ -155,4 +168,4 @@ BTree.insert(5);
 
 BTree.print();
 
-console.log(BTree.sumNodes());
+console.log(BTree.findDepth(BTree.root, 10));

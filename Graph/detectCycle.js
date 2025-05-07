@@ -11,26 +11,27 @@ class Graph {
 
   addEdge(v1, v2) {
     this.adjList.get(v1).push(v2);
-    this.adjList.get(v2).push(v1);
   }
 
-  hasCycle() {
+  hasCycle(vertex) {
+    console.log(vertex);
     const visited = {};
-    let first = Array.from(this.adjList.keys())[0];
+    const queue = [vertex];
 
-    let stack = [first];
-    while (stack.length) {
-      let cur = stack.pop();
+    while (queue.length) {
+      let current = queue.shift();
 
-      visited[cur] = true;
-      
-      for (const neighbor of this.adjList.get(cur)) {
+      visited[current] = true;
+
+      for (const neighbor of this.adjList.get(current)) {
         if (!visited[neighbor]) {
-          stack.push(neighbor);
-          
+          queue.push(neighbor);
+        } else {
+          return true;
         }
       }
     }
+    return false;
   }
 }
 
@@ -39,7 +40,6 @@ const g = new Graph();
 
 g.addEdge('1', '2');
 g.addEdge('2', '3');
-g.addEdge('3', '1');
 g.addEdge('3', '4');
 
-console.log(g.hasCycle());
+console.log(g.hasCycle('1'));
