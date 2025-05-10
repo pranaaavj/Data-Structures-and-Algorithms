@@ -63,7 +63,6 @@ class Heap {
       this.swap(0, length - 1);
 
       let index = 0;
-
       while (true) {
         let largest = index;
         let left = this.left(index);

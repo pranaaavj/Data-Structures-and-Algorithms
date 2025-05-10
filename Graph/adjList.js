@@ -80,6 +80,57 @@ class Graph {
     }
   }
 
+  findShortestPath(vertex, target) {
+    let shortestPath = null;
+
+    const dfs = (vertex, path = [], visited = {}) => {
+      path.push(vertex);
+      visited[vertex] = true;
+
+      if (vertex === target) {
+        if (shortestPath == null || path.length < shortestPath.length) {
+          shortestPath = [...path];
+        }
+      } else {
+        for (let neighbor of this.adjList.get(vertex)) {
+          if (!visited[neighbor]) {
+            dfs(neighbor, path, visited);
+          }
+        }
+      }
+
+      path.pop();
+      visited[vertex] = false;
+    };
+
+    dfs(vertex);
+    return shortestPath;
+  }
+
+  findAllPaths(vertex, target, visited = {}, path = '') {
+    if (vertex === target) return console.log(path + ' ' + vertex);
+
+    for (const neighbor of this.adjList.get(vertex)) {
+      if (!visited[neighbor]) {
+        visited[vertex] = true;
+        this.findAllPaths(neighbor, target, visited, path + ' ' + vertex);
+        visited[vertex] = false;
+      }
+    }
+  }
+
+  detectCycle(vertex, parent = null, visited = {}) {
+    visited[vertex] = true;
+
+    for (let neighbor of this.adjList.get(vertex)) {
+      if (neighbor === parent) continue;
+      if (visited[neighbor]) return true;
+      if (this.detectCycle(neighbor, vertex, visited)) return true;
+    }
+
+    return false;
+  }
+
   showList() {
     console.log(this.adjList);
   }
@@ -93,11 +144,11 @@ graph.addVertex('3');
 graph.addVertex('4');
 
 graph.addEdges('1', '2');
-graph.addEdges('1', '4');
+// graph.addEdges('1', '4');
 graph.addEdges('1', '3');
 graph.addEdges('2', '3');
 graph.addEdges('4', '3');
 
 graph.showList();
 
-graph.bfsRecursive(['1']);
+console.log(graph.findShortestPath('1', '4'));
